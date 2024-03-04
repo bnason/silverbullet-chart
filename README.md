@@ -1,0 +1,1 @@
+# SilverBullet Kubernetes Init Container
