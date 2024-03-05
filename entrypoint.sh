@@ -4,11 +4,6 @@ INITIALIZED=false
 
 if [ ! -z "${GIT_REPOSITORY}" ]; then
 	echo "Git is enabled"
-	echo "Configuring git"
-	git config --global user.name "${GIT_NAME}"
-	git config --global user.email "${GIT_EMAIL}"
-	git config --global init.defaultBranch main
-	echo
 
 	echo "Checking ${GIT_REPOSITORY}"
 	GIT_REPO_EXISTS=`git ls-remote ${GIT_REPOSITORY} 2>1 /dev/null; echo $?`
@@ -40,6 +35,7 @@ if [ "${INITIALIZED}" = false ]; then
 			echo "Configuring repository"
 			cd /space
 			rm -rf .git
+			git config init.defaultBranch main
 			git init .
 			git remote add origin ${GIT_REPOSITORY}
 			git add .
@@ -52,5 +48,11 @@ if [ "${INITIALIZED}" = false ]; then
 		exit 1
 	fi
 fi
+
+echo "Configuring git name and email"
+cd /space
+git config user.name "${GIT_NAME}"
+git config user.email "${GIT_EMAIL}"
+echo
 
 echo "Initialization complete"
