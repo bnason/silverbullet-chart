@@ -2,7 +2,7 @@ set -e
 
 INITIALIZED=false
 
-if [ "${GIT_ENABLED}" = true ]; then
+if [ ! -z "${GIT_REPOSITORY}" ]; then
 	echo "Git is enabled"
 	echo "Configuring git"
 	git config --global user.name "${GIT_NAME}"
@@ -26,23 +26,30 @@ if [ "${GIT_ENABLED}" = true ]; then
 		echo "${GIT_REPOSITORY} does not exist"
 		echo
 	fi
+else
+	echo "No repository given"
 fi
 
 if [ "${INITIALIZED}" = false ]; then
-	echo "Cloning ${INIT_GIT_REPOSITORY} into /space/"
-	git clone --verbose ${INIT_GIT_REPOSITORY} /space/
-	echo
-
-	if [ "${GIT_ENABLED}" = true ]; then
-		echo "Configuring repository"
-		cd /space
-		rm -rf .git
-		git init .
-		git remote add origin ${GIT_REPOSITORY}
-		git add .
-		git commit -m 'Initial commit'
-		echo git push --set-upstream origin main
+	if [ ! -z "${INIT_REPOSITORY}" ]; then
+		echo "Cloning ${INIT_REPOSITORY} into /space/"
+		git clone --verbose ${INIT_REPOSITORY} /space/
 		echo
+
+		if [ ! -z "${GIT_REPOSITORY}" ]; then
+			echo "Configuring repository"
+			cd /space
+			rm -rf .git
+			git init .
+			git remote add origin ${GIT_REPOSITORY}
+			git add .
+			git commit -m 'Initial commit'
+			echo git push --set-upstream origin main
+			echo
+		fi
+	else
+		echo "No initialization repository given"
+		exit 1
 	fi
 fi
 
