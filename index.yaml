@@ -1,0 +1,14 @@
+apiVersion: v1
+entries:
+  silverbullet:
+  - apiVersion: v2
+    appVersion: 0.7.5
+    created: "2024-03-08T15:41:56.140097338Z"
+    description: A SilverBullet chart for Kubernetes
+    digest: 87e988d60f814806936fac604479de6d87465d1e01f6d49b3f3a2851e46350e5
+    name: silverbullet
+    type: application
+    urls:
+    - https://github.com/bnason/silverbullet-chart/releases/download/silverbullet-0.1.0/silverbullet-0.1.0.tgz
+    version: 0.1.0
+generated: "2024-03-08T15:41:56.140107266Z"
