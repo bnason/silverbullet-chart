@@ -1,1 +1,1 @@
-# SilverBullet Kubernetes Init Container
+# SilverBullet Helm Chart

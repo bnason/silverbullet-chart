@@ -4,6 +4,7 @@ INITIALIZED=false
 
 if [ ! -z "${GIT_REPOSITORY}" ]; then
 	echo "Git is enabled"
+	echo
 
 	echo "Checking ${GIT_REPOSITORY}"
 	GIT_REPO_EXISTS=`git ls-remote ${GIT_REPOSITORY} 2>1 /dev/null; echo $?`
@@ -13,7 +14,7 @@ if [ ! -z "${GIT_REPOSITORY}" ]; then
 		echo "Repository exists"
 		echo "Cloning ${GIT_REPOSITORY} into /space/"
 
-		git clone --single-branch ${GIT_REPOSITORY} /space/
+		git clone --single-branch --branch ${GIT_BRANCH:=main} ${GIT_REPOSITORY} /space/
 
 		INITIALIZED=true
 		echo
@@ -28,14 +29,14 @@ fi
 if [ "${INITIALIZED}" = false ]; then
 	if [ ! -z "${INIT_REPOSITORY}" ]; then
 		echo "Cloning ${INIT_REPOSITORY} into /space/"
-		git clone --verbose ${INIT_REPOSITORY} /space/
+		git clone --depth 1 --branch ${INIT_BRANCH:=main} ${INIT_REPOSITORY} /space/
 		echo
 
 		if [ ! -z "${GIT_REPOSITORY}" ]; then
 			echo "Configuring repository"
-			cd /space
+			cd /space/
 			rm -rf .git
-			git config init.defaultBranch main
+			git config init.defaultBranch ${GIT_BRANCH:=main}
 			git init .
 			git remote add origin ${GIT_REPOSITORY}
 			git add .
@@ -50,7 +51,7 @@ if [ "${INITIALIZED}" = false ]; then
 fi
 
 echo "Configuring git name and email"
-cd /space
+cd /space/
 git config user.name "${GIT_NAME}"
 git config user.email "${GIT_EMAIL}"
 echo
