@@ -1,7 +1,7 @@
 # SilverBullet Helm Chart
 
 
-![Version: 0.3.0](https://img.shields.io/badge/Version-0.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.7.5](https://img.shields.io/badge/AppVersion-0.7.5-informational?style=flat-square)
+![Version: 0.3.1](https://img.shields.io/badge/Version-0.3.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.7.5](https://img.shields.io/badge/AppVersion-0.7.5-informational?style=flat-square)
 
 A [SilverBullet](https://silverbullet.md/) chart for Kubernetes. [SilverBullet](https://silverbullet.md/) is a note-taking application optimized for people with a [hacker mindset](https://en.wikipedia.org/wiki/Hacker).
 
@@ -57,15 +57,13 @@ The command removes all the Kubernetes components associated with the chart and 
 
 ## Values
 
+
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | admin.password | string | `""` |  |
 | admin.username | string | `""` |  |
 | affinity | object | `{}` |  |
-| autoscaling.enabled | bool | `false` |  |
-| autoscaling.maxReplicas | int | `100` |  |
-| autoscaling.minReplicas | int | `1` |  |
-| autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
+| extraManifests | list | `[]` |  |
 | fullnameOverride | string | `""` |  |
 | git.branch | string | `"main"` |  |
 | git.email | string | `""` |  |
@@ -96,8 +94,9 @@ The command removes all the Kubernetes components associated with the chart and 
 | podSecurityContext | object | `{}` |  |
 | readinessProbe.httpGet.path | string | `"/"` |  |
 | readinessProbe.httpGet.port | string | `"http"` |  |
-| replicaCount | int | `1` |  |
 | resources | object | `{}` |  |
+| runMode.readOnly | bool | `false` |  |
+| runMode.syncOnly | bool | `false` |  |
 | securityContext | object | `{}` |  |
 | service.port | int | `3000` |  |
 | service.type | string | `"ClusterIP"` |  |
