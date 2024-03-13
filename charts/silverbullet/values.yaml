@@ -2,6 +2,10 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+runMode:
+  readOnly: false
+  syncOnly: false
+
 admin:
   username: ""
   password: ""
@@ -25,8 +29,6 @@ ssh:
   id_rsa: ""
   id_rsa.pub: ""
   known_hosts: ""
-
-replicaCount: 1
 
 image:
   repository: zefhemel/silverbullet
@@ -103,13 +105,6 @@ readinessProbe:
   httpGet:
     path: /
     port: http
-
-autoscaling:
-  enabled: false
-  minReplicas: 1
-  maxReplicas: 100
-  targetCPUUtilizationPercentage: 80
-  # targetMemoryUtilizationPercentage: 80
 
 # Additional volumes on the output Deployment definition.
 volumes: []

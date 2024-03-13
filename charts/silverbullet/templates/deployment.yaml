@@ -5,9 +5,6 @@ metadata:
   labels:
     {{- include "silverbullet.labels" . | nindent 4 }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
-  replicas: {{ .Values.replicaCount }}
-  {{- end }}
   selector:
     matchLabels:
       {{- include "silverbullet.selectorLabels" . | nindent 6 }}
@@ -51,14 +48,28 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          {{- if or .Values.admin.username }}
           env:
-          - name: SB_USER
-            valueFrom:
-              secretKeyRef:
-                name: {{ include "silverbullet.fullname" . }}
-                key: SB_USER
-          {{- end }}
+            {{- if or .Values.admin.username }}
+            - name: SB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "silverbullet.fullname" . }}
+                  key: SB_USER
+            {{- end }}
+            {{- if .Values.runMode.syncOnly }}
+            - name: SB_SYNC_ONLY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "silverbullet.fullname" . }}
+                  key: SB_SYNC_ONLY
+            {{- end }}
+            {{- if .Values.runMode.readOnly }}
+            - name: SB_READ_ONLY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "silverbullet.fullname" . }}
+                  key: SB_READ_ONLY
+            {{- end }}
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
