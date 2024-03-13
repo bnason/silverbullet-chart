@@ -135,3 +135,5 @@ tolerations: []
 #    effect: NoSchedule
 
 affinity: {}
+
+extraManifests: []
