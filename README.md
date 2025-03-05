@@ -8,7 +8,7 @@ A [SilverBullet](https://silverbullet.md/) chart for Kubernetes. [SilverBullet](
 # TL;DR;
 
 ```console
-helm repo add silverbullet https://bnason.github.io/silverbullet-helm
+helm repo add silverbullet https://bnason.github.io/silverbullet-chart
 helm --namespace=silverbullet --create-namespace install silverbullet silverbullet/silverbullet
 ```
 
